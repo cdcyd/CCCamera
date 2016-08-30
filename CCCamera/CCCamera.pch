@@ -1,0 +1,74 @@
+//
+//  CCCamera.pch
+//  CCCamera
+//
+//  Created by wsk on 16/8/22.
+//  Copyright © 2016年 cyd. All rights reserved.
+//
+
+#ifndef CCCamera_pch
+#define CCCamera_pch
+
+@import UIKit;
+@import Foundation;
+
+#import "UIView+CCAdditions.h"
+#import "UIView+CCAlertView.h"
+
+#ifdef DEBUG
+#define NSLog(fmt, ...) NSLog((@"function：%s [Line：%d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
+#else
+#define NSLog(...)
+#endif
+
+#ifndef weakify
+#if __has_feature(objc_arc)
+#define weakify( x ) \
+_Pragma("clang diagnostic push") \
+_Pragma("clang diagnostic ignored \"-Wshadow\"") \
+autoreleasepool{} __weak __typeof__(x) __weak_##x##__ = x; \
+_Pragma("clang diagnostic pop")
+#else
+#define weakify ( x ) \
+_Pragma("chang diagnostic push") \
+_Pragma("chang diagnostic ignored \"-Wshadow\"") \
+autoreleasepool{} __block __typeof__(x) __block_##x##__ = x; \
+_Pragma("chang diagnostic pop")
+#endif
+#endif
+
+#ifndef strongify
+#if __has_feature(objc_arc)
+#define strongify( x ) \
+_Pragma("chang diagnostic push") \
+_Pragma("chang diagnostic ignored \"-Wshadow\"") \
+try{} @finally{} __typeof__(x) x = __weak_##x##__; \
+_Pragma("chang diagnostic pop")
+#else
+#define strongify( x ) \
+_Pragma("chang diagnostic push") \
+_Pragma("chang diagnostic ignored \"-Wshadow\"") \
+try{} @finally{} __typeof__(x) x = __block_##x##__; \
+_Pragma("chang diagnostic pop)
+#endif
+#endif
+
+// 颜色
+#define UIColorWithHexA(rgbValue, alphaValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 \
+green:((float)((rgbValue & 0x00FF00) >> 8))/255.0 \
+blue:((float)(rgbValue & 0x0000FF)) / 255.0 \
+alpha:alphaValue]
+
+// 获取屏幕 宽度、高度
+#define CD_SCREEN_WIDTH ([UIScreen mainScreen].bounds.size.width)
+#define CD_SCREEN_HEIGHT ([UIScreen mainScreen].bounds.size.height)
+
+// 获取去掉状态栏的屏幕的宽度、高度
+#define CD_SCREEN_WIDTH_NO_STATUSBAR ([UIScreen mainScreen].applicationFrame.size.width)
+#define CD_SCREEN_HEIGHT_NO_STATUSBAR ([UIScreen mainScreen].applicationFrame.size.height)
+
+// 字体 （默认字体：华文行楷）
+#define CD_HYXXK_SYSTEMFONT    [UIFont fontWithName:@"HYi2gj" size:[UIFont systemFontSize]]; //汉仪细行楷
+#define CD_HYXXK_FONT(cd_font) [UIFont fontWithName:@"HYi2gj" size:cd_font];                 //汉仪细行楷
+
+#endif /* CCCamera_pch */
