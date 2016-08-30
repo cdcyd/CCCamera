@@ -26,14 +26,6 @@
     return self;
 }
 
--(instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
-    return [self initWithImage:nil previewFrame:CGRectZero];
-}
-
--(instancetype)initWithCoder:(NSCoder *)aDecoder{
-    return [self initWithImage:nil previewFrame:CGRectZero];
-}
-
 - (instancetype)init{
     @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Use -initWithImage: previewFrame:" userInfo:nil];
 }
