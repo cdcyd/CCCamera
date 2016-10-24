@@ -371,6 +371,7 @@
 				TargetAttributes = {
 					7C85FB711D6AAAE4002374C2 = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = 9C283KM7PP;
 					};
 					7C85FB8D1D6AAAE4002374C2 = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -593,6 +594,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 9C283KM7PP;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/$(PRODUCT_NAME)/CCCamera.pch";
 				INFOPLIST_FILE = CCCamera/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -605,6 +611,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 9C283KM7PP;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/$(PRODUCT_NAME)/CCCamera.pch";
 				INFOPLIST_FILE = CCCamera/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

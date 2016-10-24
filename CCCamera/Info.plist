@@ -2,11 +2,17 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>UIAppFonts</key>
-    <array>
-        <string>汉仪细行楷简.ttf</string>
-        <string>华文行楷.ttf</string>
-    </array>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>CCCamera将访问你的相册</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>CCCamera将访问你的麦克风</string>
+	<key>NSCameraUsageDescription</key>
+	<string>CCCamera将访问你的相机</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>汉仪细行楷简.ttf</string>
+		<string>华文行楷.ttf</string>
+	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>

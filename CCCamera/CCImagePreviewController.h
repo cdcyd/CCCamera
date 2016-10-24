@@ -12,6 +12,6 @@
 
 - (instancetype)init NS_UNAVAILABLE;
 
-- (instancetype)initWithImage:(UIImage *)image previewFrame:(CGRect)frame NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithImage:(UIImage *)image frame:(CGRect)frame NS_DESIGNATED_INITIALIZER;
 
 @end

@@ -17,17 +17,27 @@
 
 @implementation CCImagePreviewController
 
-- (instancetype)initWithImage:(UIImage *)image previewFrame:(CGRect)frame{
-    self = [super init];
-    if (self) {
+- (instancetype)initWithImage:(UIImage *)image frame:(CGRect)frame{
+    if (self = [super initWithNibName:nil bundle:nil]) {
         _image = image;
         _frame = frame;
     }
     return self;
 }
 
-- (instancetype)init{
+- (instancetype)init
+{
     @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Use -initWithImage: previewFrame:" userInfo:nil];
+}
+
+-(instancetype)initWithCoder:(NSCoder *)aDecoder
+{
+    return [self initWithImage:nil frame:CGRectZero];
+}
+
+-(instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    return [self initWithImage:nil frame:CGRectZero];
 }
 
 - (void)viewDidLoad {
