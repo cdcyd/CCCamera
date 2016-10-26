@@ -27,7 +27,11 @@
 
 - (instancetype)init
 {
-    @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Use -initWithImage: previewFrame:" userInfo:nil];
+    @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Use -initWithImage: frame:" userInfo:nil];
+}
+
++ (instancetype)new{
+    @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Use -initWithImage: frame:" userInfo:nil];
 }
 
 -(instancetype)initWithCoder:(NSCoder *)aDecoder
@@ -44,7 +48,7 @@
     [super viewDidLoad];
     UIImageView *imageView = [[UIImageView alloc]initWithImage:_image];
     imageView.layer.masksToBounds = YES;
-    imageView.contentMode = UIViewContentModeScaleAspectFit;
+    imageView.contentMode = UIViewContentModeScaleAspectFill;
     imageView.frame = _frame;
     [self.view addSubview:imageView];
 }

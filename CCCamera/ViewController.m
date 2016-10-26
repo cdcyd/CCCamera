@@ -24,9 +24,10 @@
     [super viewDidLoad];
     self.title = @"CCCamera";
     self.dataSource = @[@"相机.CCCameraViewController",
-                        @"gl相机.CCglCameraViewController"];
+                        @"gl渲染.CCglCameraViewController"];
   
     [self.view addSubview:self.tableView];
+    [[UITableViewHeaderFooterView appearance] setTintColor:UIColorWithHexA(0xebf5ff, 1)];
 }
 
 - (UITableView *)tableView{
@@ -38,7 +39,6 @@
         _tableView.tableFooterView = [[UIView alloc]initWithFrame:CGRectZero];
         _tableView.showsVerticalScrollIndicator = NO;
         _tableView.backgroundColor = [UIColor clearColor];
-        [[UITableViewHeaderFooterView appearance] setTintColor:UIColorWithHexA(0xebf5ff, 1)];
     }
     return _tableView;
 }
@@ -63,25 +63,22 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
-        cell.backgroundColor = [UIColor clearColor];
+        cell.backgroundColor = [UIColor whiteColor];
         cell.textLabel.font = CD_HYXXK_FONT(20);
     }
-    cell.textLabel.text = _dataSource[indexPath.section];
+    cell.textLabel.text = [[_dataSource[indexPath.section] componentsSeparatedByString:@"."] firstObject];
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    [self performSelector:@selector(deselectRowAtIndexPath:) withObject:indexPath afterDelay:0.1];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
     const char *className = [[[_dataSource[indexPath.section] componentsSeparatedByString:@"."] lastObject] UTF8String];
     Class pushClass = objc_getClass(className);
-    if (pushClass) {
+    if (object_isClass(pushClass)) {
         id vc = [[pushClass alloc]init];
         [self.navigationController pushViewController:vc animated:YES];
     }
-}
-
-- (void)deselectRowAtIndexPath:(NSIndexPath *)indexPath{
-    [_tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

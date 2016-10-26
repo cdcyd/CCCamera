@@ -74,6 +74,7 @@
     [super viewDidLoad];
     [self setupUI];
     
+    // init
     _movieURL = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@%@", NSTemporaryDirectory(), @"movie.mov"]];
     _referenceOrientation = AVCaptureVideoOrientationPortrait;
     _motionManager = [[CCMotionManager alloc] init];

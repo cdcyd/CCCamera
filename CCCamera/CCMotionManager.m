@@ -26,15 +26,13 @@
         }
         _motionManager.deviceMotionUpdateInterval = 1/15.0;
         if (_motionManager.deviceMotionAvailable) {
-            NSLog(@"开始陀螺仪");
             [_motionManager startDeviceMotionUpdatesToQueue:[NSOperationQueue currentQueue]
                                                 withHandler: ^(CMDeviceMotion *motion, NSError *error){
                                                     [self performSelectorOnMainThread:@selector(handleDeviceMotion:) withObject:motion waitUntilDone:YES];
                                                 }];
         } 
         else {
-            NSLog(@"开启陀螺仪失败");
-            [self setMotionManager:nil];
+            _motionManager = nil;
         }
     }
     return self;
