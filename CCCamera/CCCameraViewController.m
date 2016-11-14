@@ -60,7 +60,7 @@
 @property(nonatomic, strong) UIButton *typeBtn;
 @property(nonatomic, strong) UIButton *torchBtn;
 @property(nonatomic, strong) UIButton *flashBtn;
-@property(nonatomic, assign) BOOL      isGIF;           //拍照片还是GIF
+@property(nonatomic, assign) BOOL      isVideo;           //拍照片还是视频
 
 // 设备方向
 @property(nonatomic, strong) CCMotionManager    *motionManager;
@@ -91,6 +91,7 @@
 }
 
 #pragma mark - AVCaptureSession life cycle
+// 配置会话
 - (void)setupSession:(NSError **)error{
     _captureSession = [[AVCaptureSession alloc]init];
     [_captureSession setSessionPreset:AVCaptureSessionPresetHigh];
@@ -99,6 +100,7 @@
     [self setupSessionOutputs:error];
 }
 
+// 添加输入
 - (void)setupSessionInputs:(NSError **)error{
     // 视频输入
     AVCaptureDevice *videoDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
@@ -118,6 +120,7 @@
     }
 }
 
+// 添加输出
 - (void)setupSessionOutputs:(NSError **)error{
     dispatch_queue_t captureQueue = dispatch_queue_create("com.cc.MovieCaptureQueue", DISPATCH_QUEUE_SERIAL);
     // 音频输出
@@ -184,13 +187,12 @@
 - (void)startRecording
 {
     dispatch_async(_movieWritingQueue, ^{
-        
         [self removeFile:_movieURL];// 删除原来的视频文件
-        
         if (!_assetWriter) {
             NSError *error;
             _assetWriter = [[AVAssetWriter alloc] initWithURL:_movieURL fileType:AVFileTypeQuickTimeMovie error:&error];
-            if (error){
+            if (error)
+            {
                 [self showError:error];
             }
         }
@@ -206,9 +208,7 @@
     _recording = NO;
     
     dispatch_async(_movieWritingQueue, ^{
-        
         [_assetWriter finishWritingWithCompletionHandler:^(){
-
             BOOL isSave = NO;
             switch (_assetWriter.status)
             {
@@ -238,13 +238,12 @@
                     }];
                 });
             }
-            
         }];
-        
         [self startCaptureSession]; // 重新开启会话
     });
 }
 
+#pragma mark - AVCaptureVideoDataOutputSampleBufferDelegate
 -(void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection
 {
     if (_recording) {
@@ -258,7 +257,7 @@
                         _readyToRecordVideo = [self setupAssetWriterVideoInput:CMSampleBufferGetFormatDescription(sampleBuffer)];
                     }
                     
-                    if ([self inputsReadyToRecord]){
+                    if (_readyToRecordAudio && _readyToRecordVideo){
                         [self writeSampleBuffer:sampleBuffer ofType:AVMediaTypeVideo];
                     }
                 }
@@ -267,7 +266,7 @@
                         _readyToRecordAudio = [self setupAssetWriterAudioInput:CMSampleBufferGetFormatDescription(sampleBuffer)];
                     }
                     
-                    if ([self inputsReadyToRecord]){
+                    if (_readyToRecordAudio && _readyToRecordVideo){
                         [self writeSampleBuffer:sampleBuffer ofType:AVMediaTypeAudio];
                     }
                 }
@@ -275,11 +274,6 @@
             CFRelease(sampleBuffer);
         });
     }
-}
-
-- (BOOL)inputsReadyToRecord
-{
-    return (_readyToRecordAudio && _readyToRecordVideo);
 }
 
 - (void)writeSampleBuffer:(CMSampleBufferRef)sampleBuffer ofType:(NSString *)mediaType
@@ -316,6 +310,7 @@
     }
 }
 
+#pragma mark - configer
 // 配置音频输入
 - (BOOL)setupAssetWriterAudioInput:(CMFormatDescriptionRef)currentFormatDescription
 {
@@ -330,7 +325,6 @@
     else{
         currentChannelLayoutData = [NSData data];
     }
-        
     NSDictionary *audioCompressionSettings = @{AVFormatIDKey : [NSNumber numberWithInteger:kAudioFormatMPEG4AAC],
                                                AVSampleRateKey : [NSNumber numberWithFloat:currentASBD->mSampleRate],
                                                AVEncoderBitRatePerChannelKey : [NSNumber numberWithInt:64000],
@@ -341,7 +335,6 @@
     {
         _assetAudioInput = [AVAssetWriterInput assetWriterInputWithMediaType:AVMediaTypeAudio outputSettings:audioCompressionSettings];
         _assetAudioInput.expectsMediaDataInRealTime = YES;
-        
         if ([_assetWriter canAddInput:_assetAudioInput]){
             [_assetWriter addInput:_assetAudioInput];
         }
@@ -354,7 +347,6 @@
         [self showError:_assetWriter.error];
         return NO;
     }
-    
     return YES;
 }
 
@@ -559,6 +551,7 @@
         }
         [_captureSession commitConfiguration];     
         
+        // 转换摄像头后重新设置视频输出
         [self resetupVideoOutput];
     } 
     else{
@@ -586,6 +579,9 @@
     _videoConnection = [videoOut connectionWithMediaType:AVMediaTypeVideo];
     _videoConnection.videoOrientation = self.referenceOrientation;
     [_captureSession commitConfiguration];
+    
+    // 开始视频捕捉
+    [self startCaptureSession];
 }
 
 #pragma mark - 聚焦
@@ -807,11 +803,11 @@ static const NSString *CameraAdjustingExposureContext;
 - (void)changePhotoType:(UIButton *)btn{
     btn.selected = !btn.selected;
     if (btn.selected) {
-        _isGIF = YES;
+        _isVideo = YES;
         [_photoBtn setTitle:@"开始" forState:UIControlStateNormal];
     }
     else{
-        _isGIF = NO;
+        _isVideo = NO;
         [_photoBtn setTitle:@"拍照" forState:UIControlStateNormal];
         [self startCaptureSession];
     }
@@ -819,7 +815,7 @@ static const NSString *CameraAdjustingExposureContext;
 
 #pragma mark - 开始拍照/录影
 - (void)takePicture:(UIButton *)btn{
-    if (_isGIF){
+    if (_isVideo){
         if (!_recording) {
             [self startRecording];
             self.topView.userInteractionEnabled = NO;

@@ -49,7 +49,7 @@
     UIImageView *imageView = [[UIImageView alloc]initWithImage:_image];
     imageView.layer.masksToBounds = YES;
     imageView.contentMode = UIViewContentModeScaleAspectFill;
-    imageView.frame = _frame;
+    imageView.frame = CGRectMake(0, 0, _frame.size.width, _frame.size.height);
     [self.view addSubview:imageView];
 }
 
