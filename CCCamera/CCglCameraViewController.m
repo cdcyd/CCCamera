@@ -14,12 +14,10 @@
 {
     AVCaptureSession            *_captureSession;
     AVCaptureDeviceInput        *_deviceInput;
-    
-    AVCaptureConnection         *_videoConnection;
-    AVCaptureVideoDataOutput    *_videoOutput;
 }
 @property(nonatomic, strong) GLKView   *glview;
 @property(nonatomic, strong) CIContext *cicontext;
+
 @end
 
 @implementation CCglCameraViewController
@@ -46,19 +44,6 @@
         }
     }
 
-    // 视频输出
-    AVCaptureVideoDataOutput *videoOut = [[AVCaptureVideoDataOutput alloc] init];
-    [videoOut setAlwaysDiscardsLateVideoFrames:YES];
-    [videoOut setVideoSettings:@{(id)kCVPixelBufferPixelFormatTypeKey : [NSNumber numberWithInt:kCVPixelFormatType_32BGRA]}];
-    dispatch_queue_t videoCaptureQueue = dispatch_queue_create("Video Capture Queue", DISPATCH_QUEUE_SERIAL);
-    [videoOut setSampleBufferDelegate:self queue:videoCaptureQueue];
-    if ([_captureSession canAddOutput:videoOut]){
-        [_captureSession addOutput:videoOut];
-        _videoOutput = videoOut;
-    }
-    _videoConnection = [videoOut connectionWithMediaType:AVMediaTypeVideo];
-    _videoConnection.videoOrientation = AVCaptureVideoOrientationPortrait;
-    
     if (!_captureSession.isRunning){
         [_captureSession startRunning];
     }

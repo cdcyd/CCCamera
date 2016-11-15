@@ -11,11 +11,10 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <Photos/Photos.h>
 #import <CoreMedia/CMMetadata.h>
-#import <GLKit/GLKit.h>
 
 #import "CCVideoPreview.h"
 #import "CCImagePreviewController.h"
-#import "CCTools+GIF.h"
+#import "CCTools.h"
 #import "UIView+CCHUD.h"
 #import "CCMotionManager.h"
 

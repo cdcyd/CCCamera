@@ -26,7 +26,6 @@
 		7C85FBC31D6AACB9002374C2 /* UIView+CCAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C85FBC21D6AACB9002374C2 /* UIView+CCAdditions.m */; };
 		7C85FBC61D6AACCD002374C2 /* UILabel+CCFont.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C85FBC51D6AACCD002374C2 /* UILabel+CCFont.m */; };
 		7C85FBCB1D6AADBF002374C2 /* CCTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C85FBCA1D6AADBF002374C2 /* CCTools.m */; };
-		7C85FBCE1D6AADD5002374C2 /* CCTools+GIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C85FBCD1D6AADD5002374C2 /* CCTools+GIF.m */; };
 		7C85FBD21D6AAE49002374C2 /* CCCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C85FBD11D6AAE49002374C2 /* CCCameraViewController.m */; };
 		7C85FBD51D6AAE7B002374C2 /* CCImagePreviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C85FBD41D6AAE7B002374C2 /* CCImagePreviewController.m */; };
 		7C85FBD91D6AAECE002374C2 /* CCVideoPreview.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C85FBD81D6AAECE002374C2 /* CCVideoPreview.m */; };
@@ -87,8 +86,6 @@
 		7C85FBC51D6AACCD002374C2 /* UILabel+CCFont.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+CCFont.m"; sourceTree = "<group>"; };
 		7C85FBC91D6AADBF002374C2 /* CCTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTools.h; sourceTree = "<group>"; };
 		7C85FBCA1D6AADBF002374C2 /* CCTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTools.m; sourceTree = "<group>"; };
-		7C85FBCC1D6AADD5002374C2 /* CCTools+GIF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CCTools+GIF.h"; sourceTree = "<group>"; };
-		7C85FBCD1D6AADD5002374C2 /* CCTools+GIF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CCTools+GIF.m"; sourceTree = "<group>"; };
 		7C85FBD01D6AAE49002374C2 /* CCCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCCameraViewController.h; sourceTree = "<group>"; };
 		7C85FBD11D6AAE49002374C2 /* CCCameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCCameraViewController.m; sourceTree = "<group>"; };
 		7C85FBD31D6AAE7B002374C2 /* CCImagePreviewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCImagePreviewController.h; sourceTree = "<group>"; };
@@ -280,8 +277,6 @@
 				7C4B0F371D73F642005935EE /* CCMotionManager.m */,
 				7C85FBC91D6AADBF002374C2 /* CCTools.h */,
 				7C85FBCA1D6AADBF002374C2 /* CCTools.m */,
-				7C85FBCC1D6AADD5002374C2 /* CCTools+GIF.h */,
-				7C85FBCD1D6AADD5002374C2 /* CCTools+GIF.m */,
 			);
 			name = Tools;
 			sourceTree = "<group>";
@@ -366,7 +361,7 @@
 		7C85FB6A1D6AAAE4002374C2 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = cyd;
 				TargetAttributes = {
 					7C85FB711D6AAAE4002374C2 = {
@@ -440,7 +435,6 @@
 				7C85FBC31D6AACB9002374C2 /* UIView+CCAdditions.m in Sources */,
 				7C85FB831D6AAAE4002374C2 /* CCCamera.xcdatamodeld in Sources */,
 				7C4B0F381D73F642005935EE /* CCMotionManager.m in Sources */,
-				7C85FBCE1D6AADD5002374C2 /* CCTools+GIF.m in Sources */,
 				7C85FB7D1D6AAAE4002374C2 /* ViewController.m in Sources */,
 				7C85FBC01D6AACA1002374C2 /* UIView+CCAlertView.m in Sources */,
 				7C85FBB81D6AABC4002374C2 /* CCBaseNavigationController.m in Sources */,
@@ -522,8 +516,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -566,8 +562,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";

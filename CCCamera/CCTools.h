@@ -10,4 +10,8 @@
 
 @interface CCTools : NSObject
 
++ (void)createGIFfromURL:(NSURL*)videoURL loopCount:(int)loopCount completion:(void(^)(NSURL *GifURL))completionBlock;
+
++ (void)createGIFfromURL:(NSURL*)videoURL frameCount:(int)frameCount delayTime:(float)delayTime loopCount:(int)loopCount completion:(void(^)(NSURL *GifURL))completionBlock;
+
 @end
