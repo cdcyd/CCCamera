@@ -33,7 +33,7 @@
     _cicontext = [CIContext contextWithEAGLContext:context];
     
     _captureSession = [[AVCaptureSession alloc]init];
-    [_captureSession setSessionPreset:AVCaptureSessionPresetHigh];
+    [_captureSession setSessionPreset:AVCaptureSessionPreset1920x1080];
     
     // 输入设备
     AVCaptureDevice *videoDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
