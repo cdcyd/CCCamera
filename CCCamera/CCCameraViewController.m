@@ -59,7 +59,7 @@
 @property(nonatomic, strong) UIButton *typeBtn;
 @property(nonatomic, strong) UIButton *torchBtn;
 @property(nonatomic, strong) UIButton *flashBtn;
-@property(nonatomic, assign) BOOL      isVideo;           //拍照片还是视频
+@property(nonatomic, assign) BOOL      isVideo;         // 拍照片还是视频
 
 // 设备方向
 @property(nonatomic, strong) CCMotionManager    *motionManager;
@@ -71,12 +71,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setupUI];
     
     // init
     _movieURL = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@%@", NSTemporaryDirectory(), @"movie.mov"]];
     _referenceOrientation = AVCaptureVideoOrientationPortrait;
     _motionManager = [[CCMotionManager alloc] init];
+    
+    [self setupUI];
     
     NSError *error;
     [self setupSession:&error];
@@ -230,7 +231,7 @@
             }
             if (isSave) {
                 dispatch_sync(dispatch_get_main_queue(), ^{
-                    [self.view showAlertView:self message:@"是否保存到相册，确定将保存2个文件到相册，一个视频，一个GIF动图(由于苹果相册不支持查看GIF，所以只有通过QQ等软件查看)" sure:^(UIAlertAction *act) {
+                    [self.view showAlertView:self message:@"是否保存到相册，确定将保存2个文件到相册，一个视频，一个GIF动图)" sure:^(UIAlertAction *act) {
                         [self saveMovieToCameraRoll];
                     } cancel:^(UIAlertAction *act) {
                         
@@ -324,11 +325,11 @@
     else{
         currentChannelLayoutData = [NSData data];
     }
-    NSDictionary *audioCompressionSettings = @{AVFormatIDKey : [NSNumber numberWithInteger:kAudioFormatMPEG4AAC],
-                                               AVSampleRateKey : [NSNumber numberWithFloat:currentASBD->mSampleRate],
-                                               AVEncoderBitRatePerChannelKey : [NSNumber numberWithInt:64000],
-                                               AVNumberOfChannelsKey : [NSNumber numberWithInteger:currentASBD->mChannelsPerFrame],
-                                               AVChannelLayoutKey : currentChannelLayoutData};
+    NSDictionary *audioCompressionSettings = @{AVFormatIDKey:[NSNumber numberWithInteger:kAudioFormatMPEG4AAC],
+                                               AVSampleRateKey:[NSNumber numberWithFloat:currentASBD->mSampleRate],
+                                               AVEncoderBitRatePerChannelKey:[NSNumber numberWithInt:64000],
+                                               AVNumberOfChannelsKey:[NSNumber numberWithInteger:currentASBD->mChannelsPerFrame],
+                                               AVChannelLayoutKey:currentChannelLayoutData};
     
     if ([_assetWriter canApplyOutputSettings:audioCompressionSettings forMediaType:AVMediaTypeAudio])
     {
@@ -365,9 +366,9 @@
     }
     
     bitsPerSecond = numPixels * bitsPerPixel;
-    NSDictionary *videoCompressionSettings = @{AVVideoCodecKey  : AVVideoCodecH264,
-                                               AVVideoWidthKey  : [NSNumber numberWithInteger:dimensions.width],
-                                               AVVideoHeightKey : [NSNumber numberWithInteger:dimensions.height],
+    NSDictionary *videoCompressionSettings = @{AVVideoCodecKey:AVVideoCodecH264,
+                                               AVVideoWidthKey:[NSNumber numberWithInteger:dimensions.width],
+                                               AVVideoHeightKey:[NSNumber numberWithInteger:dimensions.height],
                                                AVVideoCompressionPropertiesKey:@{AVVideoAverageBitRateKey:[NSNumber numberWithInteger:bitsPerSecond],
                                                                                  AVVideoMaxKeyFrameIntervalKey:[NSNumber numberWithInteger:30]}
                                                };
@@ -443,7 +444,6 @@
         
 #if __IPHONE_OS_VERSION_MAX_ALLOWED < __IPHONE_9_0 
         ALAssetsLibrary *lab = [[ALAssetsLibrary alloc]init];
-        
         if (isSaveGif) {
             // 保存GIF
             NSData *data = [[NSData alloc]initWithContentsOfURL:GifURL];
@@ -462,20 +462,17 @@
                 [self showError:error];
             }
         }];
-        
 #else
         [PHPhotoLibrary requestAuthorization:^( PHAuthorizationStatus status ) {
             if (status == PHAuthorizationStatusAuthorized) {
                 [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
-                    
                     if (isSaveGif) {
                         // 保存GIF
                         NSData *data = [[NSData alloc]initWithContentsOfURL:GifURL];
                         PHAssetCreationRequest *gifRequest = [PHAssetCreationRequest creationRequestForAsset];
                         [gifRequest addResourceWithType:PHAssetResourceTypePhoto data:data options:nil];
                     }
-                    
-                
+
                     // 保存视频
                     PHAssetCreationRequest *videoRequest = [PHAssetCreationRequest creationRequestForAsset];
                     [videoRequest addResourceWithType:PHAssetResourceTypeVideo fileURL:_movieURL options:nil];
@@ -680,7 +677,6 @@ static const NSString *CameraAdjustingExposureContext;
 #pragma mark - 自动聚焦、曝光
 -(void)focusAndExposureButtonClick:(UIButton *)btn{
     if ([self resetFocusAndExposureModes]) {
-        [self.view showAutoDismissAlert:self message:@"自动聚焦、曝光设置成功!"];
         [self runResetAnimation];
     }
 }
@@ -733,7 +729,6 @@ static const NSString *CameraAdjustingExposureContext;
 }
 
 - (void)setFlashMode:(AVCaptureFlashMode)flashMode{
-    
     // 如果手电筒打开，先关闭手电筒
     if ([self torchMode] == AVCaptureTorchModeOn) {
         [self torchClick:_torchBtn];

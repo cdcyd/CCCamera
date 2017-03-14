@@ -163,11 +163,12 @@
 		7C85FB741D6AAAE4002374C2 /* CCCamera */ = {
 			isa = PBXGroup;
 			children = (
+				7C85FBBD1D6AAC7B002374C2 /* Categories */,
 				7C85FBB01D6AAB55002374C2 /* Base */,
+				7C85FBC81D6AADAC002374C2 /* Tools */,
 				7C4B0F351D73ECB1005935EE /* ImagePreview */,
 				7C85FBC71D6AAD61002374C2 /* Camera */,
 				7C4B0F311D73EC2F005935EE /* glCamera */,
-				7C85FBBD1D6AAC7B002374C2 /* Categories */,
 				7C85FB781D6AAAE4002374C2 /* AppDelegate.h */,
 				7C85FB791D6AAAE4002374C2 /* AppDelegate.m */,
 				7C85FB7B1D6AAAE4002374C2 /* ViewController.h */,
@@ -221,8 +222,8 @@
 		7C85FBB01D6AAB55002374C2 /* Base */ = {
 			isa = PBXGroup;
 			children = (
-				7C85FBB11D6AAB5C002374C2 /* NavigationController */,
 				7C85FBB21D6AAB6D002374C2 /* ViewController */,
+				7C85FBB11D6AAB5C002374C2 /* NavigationController */,
 			);
 			name = Base;
 			sourceTree = "<group>";
@@ -248,14 +249,14 @@
 		7C85FBBD1D6AAC7B002374C2 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				7C7E42BA1D6D943F0001AF0F /* UIView+CCHUD.h */,
-				7C7E42BB1D6D943F0001AF0F /* UIView+CCHUD.m */,
-				7C85FBBE1D6AACA1002374C2 /* UIView+CCAlertView.h */,
-				7C85FBBF1D6AACA1002374C2 /* UIView+CCAlertView.m */,
-				7C85FBC11D6AACB9002374C2 /* UIView+CCAdditions.h */,
-				7C85FBC21D6AACB9002374C2 /* UIView+CCAdditions.m */,
 				7C85FBC41D6AACCD002374C2 /* UILabel+CCFont.h */,
 				7C85FBC51D6AACCD002374C2 /* UILabel+CCFont.m */,
+				7C7E42BA1D6D943F0001AF0F /* UIView+CCHUD.h */,
+				7C7E42BB1D6D943F0001AF0F /* UIView+CCHUD.m */,
+				7C85FBC11D6AACB9002374C2 /* UIView+CCAdditions.h */,
+				7C85FBC21D6AACB9002374C2 /* UIView+CCAdditions.m */,
+				7C85FBBE1D6AACA1002374C2 /* UIView+CCAlertView.h */,
+				7C85FBBF1D6AACA1002374C2 /* UIView+CCAlertView.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -263,7 +264,6 @@
 		7C85FBC71D6AAD61002374C2 /* Camera */ = {
 			isa = PBXGroup;
 			children = (
-				7C85FBC81D6AADAC002374C2 /* Tools */,
 				7C85FBD61D6AAE89002374C2 /* View */,
 				7C85FBCF1D6AAE10002374C2 /* ViewController */,
 			);
@@ -273,10 +273,10 @@
 		7C85FBC81D6AADAC002374C2 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
-				7C4B0F361D73F642005935EE /* CCMotionManager.h */,
-				7C4B0F371D73F642005935EE /* CCMotionManager.m */,
 				7C85FBC91D6AADBF002374C2 /* CCTools.h */,
 				7C85FBCA1D6AADBF002374C2 /* CCTools.m */,
+				7C4B0F361D73F642005935EE /* CCMotionManager.h */,
+				7C4B0F371D73F642005935EE /* CCMotionManager.m */,
 			);
 			name = Tools;
 			sourceTree = "<group>";
@@ -366,7 +366,7 @@
 				TargetAttributes = {
 					7C85FB711D6AAAE4002374C2 = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = 9C283KM7PP;
+						DevelopmentTeam = 25AP33B4X5;
 					};
 					7C85FB8D1D6AAAE4002374C2 = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -592,7 +592,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 9C283KM7PP;
+				DEVELOPMENT_TEAM = 25AP33B4X5;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -609,7 +609,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 9C283KM7PP;
+				DEVELOPMENT_TEAM = 25AP33B4X5;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",

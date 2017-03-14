@@ -12,8 +12,7 @@
 
 @interface CCglCameraViewController ()<AVCaptureVideoDataOutputSampleBufferDelegate>
 {
-    AVCaptureSession            *_captureSession;
-    AVCaptureDeviceInput        *_deviceInput;
+    AVCaptureSession  *_captureSession;
 }
 @property(nonatomic, strong) GLKView   *glview;
 @property(nonatomic, strong) CIContext *cicontext;
@@ -29,6 +28,8 @@
     _glview = [[GLKView alloc]initWithFrame:self.view.bounds context:context];
     [EAGLContext setCurrentContext:context];
     [self.view addSubview:_glview];
+    _glview.transform = CGAffineTransformMakeRotation(M_PI_2);
+    _glview.frame = [UIApplication sharedApplication].keyWindow.bounds;
     _cicontext = [CIContext contextWithEAGLContext:context];
     
     _captureSession = [[AVCaptureSession alloc]init];
@@ -40,8 +41,16 @@
     if (videoInput) {
         if ([_captureSession canAddInput:videoInput]){
             [_captureSession addInput:videoInput];
-            _deviceInput = videoInput;
         }
+    }
+    
+    // 输出
+    AVCaptureVideoDataOutput *videoOut = [[AVCaptureVideoDataOutput alloc] init];
+    [videoOut setAlwaysDiscardsLateVideoFrames:YES];
+    [videoOut setVideoSettings:@{(id)kCVPixelBufferPixelFormatTypeKey:[NSNumber numberWithInt:kCVPixelFormatType_32BGRA]}];
+    [videoOut setSampleBufferDelegate:self queue:dispatch_queue_create("video.buffer", DISPATCH_QUEUE_SERIAL)];
+    if ([_captureSession canAddOutput:videoOut]){
+        [_captureSession addOutput:videoOut];
     }
 
     if (!_captureSession.isRunning){
