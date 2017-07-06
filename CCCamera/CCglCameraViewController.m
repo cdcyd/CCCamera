@@ -24,18 +24,22 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    // 上下文和预览视图
     EAGLContext *context = [[EAGLContext alloc]initWithAPI:kEAGLRenderingAPIOpenGLES2];
-    _glview = [[GLKView alloc]initWithFrame:self.view.bounds context:context];
+    GLKView *glView = [[GLKView alloc]initWithFrame:self.view.bounds context:context];
     [EAGLContext setCurrentContext:context];
-    [self.view addSubview:_glview];
-    _glview.transform = CGAffineTransformMakeRotation(M_PI_2);
-    _glview.frame = [UIApplication sharedApplication].keyWindow.bounds;
+    [self.view addSubview:glView];
+    glView.transform = CGAffineTransformMakeRotation(M_PI_2);
+    glView.frame = [UIApplication sharedApplication].keyWindow.bounds;
     _cicontext = [CIContext contextWithEAGLContext:context];
+    _glview = glView;
     
-    _captureSession = [[AVCaptureSession alloc]init];
-    [_captureSession setSessionPreset:AVCaptureSessionPreset1920x1080];
+    // 捕捉会话
+    AVCaptureSession *session = [[AVCaptureSession alloc]init];
+    [session setSessionPreset:AVCaptureSessionPreset1920x1080];
+    _captureSession = session;
     
-    // 输入设备
+    // 输入
     AVCaptureDevice *videoDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
     AVCaptureDeviceInput *videoInput = [AVCaptureDeviceInput deviceInputWithDevice:videoDevice error:nil];
     if (videoInput) {
@@ -59,11 +63,9 @@
 }
 
 -(void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection{
-    
     if (_glview.context != [EAGLContext currentContext]) {
         [EAGLContext setCurrentContext:_glview.context];
     }
-    
     CVImageBufferRef imageRef = CMSampleBufferGetImageBuffer(sampleBuffer);
     CIImage *image = [CIImage imageWithCVImageBuffer:imageRef];
     [_glview bindDrawable];

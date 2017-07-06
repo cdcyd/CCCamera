@@ -106,4 +106,21 @@
     self.frame = frame;
 }
 
+- (UIViewController *)viewController
+{
+    if ([[self nextResponder] isKindOfClass:[UIViewController class]]) {
+        return (UIViewController *)[self nextResponder];
+    }
+    
+    for (UIView* next = [self superview]; next; next = next.superview)
+    {
+        UIResponder *nextResponder = [next nextResponder];
+        if ([nextResponder isKindOfClass:[UIViewController class]])
+        {
+            return (UIViewController *)nextResponder;
+        }
+    }
+    return nil;
+}
+
 @end

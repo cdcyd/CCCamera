@@ -10,7 +10,6 @@
 #import <objc/runtime.h>
 
 #define CustomFontName @"STXingkai"
-
 @implementation UILabel (CCFont)
 
 + (void)load {

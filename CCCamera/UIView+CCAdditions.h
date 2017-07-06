@@ -21,4 +21,6 @@
 @property (nonatomic) CGPoint origin;
 @property (nonatomic) CGSize  size;
 
+- (UIViewController *)viewController;
+
 @end

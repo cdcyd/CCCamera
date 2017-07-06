@@ -13,4 +13,6 @@
 
 @property (strong, nonatomic) AVCaptureSession *captureSessionsion;
 
+- (CGPoint)captureDevicePointForPoint:(CGPoint)point;
+
 @end

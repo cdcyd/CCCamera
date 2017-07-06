@@ -27,7 +27,6 @@ typedef NS_ENUM(NSInteger, GIFSize) {
 @implementation CCTools
 
 + (void)createGIFfromURL:(NSURL*)videoURL loopCount:(int)loopCount completion:(void(^)(NSURL *GifURL))completionBlock{
-    
     // 大小
     AVURLAsset *asset = [AVURLAsset assetWithURL:videoURL];
     float videoWidth = [[[asset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0] naturalSize].width;
@@ -156,7 +155,6 @@ typedef NS_ENUM(NSInteger, GIFSize) {
         CGImageRelease(imageRef);
     }
     CGImageRelease(previousImageRefCopy);
-    
     CGImageDestinationSetProperties(destination, (CFDictionaryRef)fileProperties);
     if (!CGImageDestinationFinalize(destination)) {
         NSLog(@"Failed to finalize GIF destination: %@", error);

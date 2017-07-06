@@ -25,8 +25,7 @@
     return self;
 }
 
-- (instancetype)init
-{
+- (instancetype)init{
     @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Use -initWithImage: frame:" userInfo:nil];
 }
 
@@ -34,13 +33,11 @@
     @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Use -initWithImage: frame:" userInfo:nil];
 }
 
--(instancetype)initWithCoder:(NSCoder *)aDecoder
-{
+-(instancetype)initWithCoder:(NSCoder *)aDecoder{
     return [self initWithImage:nil frame:CGRectZero];
 }
 
--(instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
+-(instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
     return [self initWithImage:nil frame:CGRectZero];
 }
 

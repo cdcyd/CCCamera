@@ -22,7 +22,6 @@
 		7C85FBAE1D6AAB20002374C2 /* 汉仪细行楷简.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7C85FBAC1D6AAB20002374C2 /* 汉仪细行楷简.ttf */; };
 		7C85FBAF1D6AAB20002374C2 /* 华文行楷.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7C85FBAD1D6AAB20002374C2 /* 华文行楷.ttf */; };
 		7C85FBB81D6AABC4002374C2 /* CCBaseNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C85FBB71D6AABC4002374C2 /* CCBaseNavigationController.m */; };
-		7C85FBC01D6AACA1002374C2 /* UIView+CCAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C85FBBF1D6AACA1002374C2 /* UIView+CCAlertView.m */; };
 		7C85FBC31D6AACB9002374C2 /* UIView+CCAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C85FBC21D6AACB9002374C2 /* UIView+CCAdditions.m */; };
 		7C85FBC61D6AACCD002374C2 /* UILabel+CCFont.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C85FBC51D6AACCD002374C2 /* UILabel+CCFont.m */; };
 		7C85FBCB1D6AADBF002374C2 /* CCTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C85FBCA1D6AADBF002374C2 /* CCTools.m */; };
@@ -30,6 +29,7 @@
 		7C85FBD51D6AAE7B002374C2 /* CCImagePreviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C85FBD41D6AAE7B002374C2 /* CCImagePreviewController.m */; };
 		7C85FBD91D6AAECE002374C2 /* CCVideoPreview.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C85FBD81D6AAECE002374C2 /* CCVideoPreview.m */; };
 		7C85FBDC1D6AB380002374C2 /* CCBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C85FBDB1D6AB380002374C2 /* CCBaseViewController.m */; };
+		D95283E01F0CBFDF006EE61E /* CCCameraView.m in Sources */ = {isa = PBXBuildFile; fileRef = D95283DF1F0CBFDF006EE61E /* CCCameraView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,8 +78,6 @@
 		7C85FBB61D6AABC4002374C2 /* CCBaseNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBaseNavigationController.h; sourceTree = "<group>"; };
 		7C85FBB71D6AABC4002374C2 /* CCBaseNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBaseNavigationController.m; sourceTree = "<group>"; };
 		7C85FBBC1D6AAC14002374C2 /* CCCamera.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCCamera.pch; sourceTree = "<group>"; };
-		7C85FBBE1D6AACA1002374C2 /* UIView+CCAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+CCAlertView.h"; sourceTree = "<group>"; };
-		7C85FBBF1D6AACA1002374C2 /* UIView+CCAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+CCAlertView.m"; sourceTree = "<group>"; };
 		7C85FBC11D6AACB9002374C2 /* UIView+CCAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+CCAdditions.h"; sourceTree = "<group>"; };
 		7C85FBC21D6AACB9002374C2 /* UIView+CCAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+CCAdditions.m"; sourceTree = "<group>"; };
 		7C85FBC41D6AACCD002374C2 /* UILabel+CCFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+CCFont.h"; sourceTree = "<group>"; };
@@ -94,6 +92,8 @@
 		7C85FBD81D6AAECE002374C2 /* CCVideoPreview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCVideoPreview.m; sourceTree = "<group>"; };
 		7C85FBDA1D6AB380002374C2 /* CCBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBaseViewController.h; sourceTree = "<group>"; };
 		7C85FBDB1D6AB380002374C2 /* CCBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBaseViewController.m; sourceTree = "<group>"; };
+		D95283DE1F0CBFDF006EE61E /* CCCameraView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCCameraView.h; sourceTree = "<group>"; };
+		D95283DF1F0CBFDF006EE61E /* CCCameraView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CCCameraView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -255,8 +255,6 @@
 				7C7E42BB1D6D943F0001AF0F /* UIView+CCHUD.m */,
 				7C85FBC11D6AACB9002374C2 /* UIView+CCAdditions.h */,
 				7C85FBC21D6AACB9002374C2 /* UIView+CCAdditions.m */,
-				7C85FBBE1D6AACA1002374C2 /* UIView+CCAlertView.h */,
-				7C85FBBF1D6AACA1002374C2 /* UIView+CCAlertView.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -295,6 +293,8 @@
 			children = (
 				7C85FBD71D6AAECE002374C2 /* CCVideoPreview.h */,
 				7C85FBD81D6AAECE002374C2 /* CCVideoPreview.m */,
+				D95283DE1F0CBFDF006EE61E /* CCCameraView.h */,
+				D95283DF1F0CBFDF006EE61E /* CCCameraView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -435,8 +435,8 @@
 				7C85FBC31D6AACB9002374C2 /* UIView+CCAdditions.m in Sources */,
 				7C85FB831D6AAAE4002374C2 /* CCCamera.xcdatamodeld in Sources */,
 				7C4B0F381D73F642005935EE /* CCMotionManager.m in Sources */,
+				D95283E01F0CBFDF006EE61E /* CCCameraView.m in Sources */,
 				7C85FB7D1D6AAAE4002374C2 /* ViewController.m in Sources */,
-				7C85FBC01D6AACA1002374C2 /* UIView+CCAlertView.m in Sources */,
 				7C85FBB81D6AABC4002374C2 /* CCBaseNavigationController.m in Sources */,
 				7C4B0F341D73EC5D005935EE /* CCglCameraViewController.m in Sources */,
 				7C85FBCB1D6AADBF002374C2 /* CCTools.m in Sources */,
@@ -598,6 +598,7 @@
 					"$(PROJECT_DIR)",
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/$(PRODUCT_NAME)/CCCamera.pch";
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				INFOPLIST_FILE = CCCamera/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cyd.ios.CCCamera;
@@ -615,6 +616,7 @@
 					"$(PROJECT_DIR)",
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/$(PRODUCT_NAME)/CCCamera.pch";
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				INFOPLIST_FILE = CCCamera/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cyd.ios.CCCamera;

@@ -21,19 +21,15 @@
 {
     self = [super init];
     if (self) {
-        if (_motionManager == nil) {
-            _motionManager = [[CMMotionManager alloc] init];
-        }
+        _motionManager = [[CMMotionManager alloc] init];
         _motionManager.deviceMotionUpdateInterval = 1/15.0;
-        if (_motionManager.deviceMotionAvailable) {
-            [_motionManager startDeviceMotionUpdatesToQueue:[NSOperationQueue currentQueue]
-                                                withHandler: ^(CMDeviceMotion *motion, NSError *error){
-                                                    [self performSelectorOnMainThread:@selector(handleDeviceMotion:) withObject:motion waitUntilDone:YES];
-                                                }];
-        } 
-        else {
+        if (!_motionManager.deviceMotionAvailable) {
             _motionManager = nil;
-        }
+            return self;
+        } 
+        [_motionManager startDeviceMotionUpdatesToQueue:[NSOperationQueue currentQueue] withHandler: ^(CMDeviceMotion *motion, NSError *error){
+            [self performSelectorOnMainThread:@selector(handleDeviceMotion:) withObject:motion waitUntilDone:YES];
+        }];
     }
     return self;
 }

@@ -12,7 +12,6 @@
 #define KEY_CC_ALERT_VIEW "UIView.AlertController"
 
 @implementation UIView (CCHUD)
-
 @dynamic ccAlertController;
 
 -(UIAlertController *)ccAlertController{
@@ -31,7 +30,7 @@
     objc_setAssociatedObject(self, KEY_CC_ALERT_VIEW, ccAlertController, OBJC_ASSOCIATION_RETAIN_NONATOMIC );
 }
 
-#pragma mark - 不会自动消失的提示框
+#pragma mark - 加载框
 -(void)showHUD:(UIViewController *)vc message:(NSString *)message{
     [self showHUD:vc message:message isLoad:NO];
 }
@@ -60,7 +59,7 @@
     [vc presentViewController:self.ccAlertController animated:YES completion:nil];
 }
 
-#pragma mark - 会自动消失的提示框
+#pragma mark - 提示框
 -(void)showAutoDismissHUD:(UIViewController *)vc message:(NSString *)message{
     [self showAutoDismissHUD:vc message:message delay:0.3];
 }
@@ -87,12 +86,40 @@
 
 -(void)hideHUD{
     if (self.ccAlertController) {
-        [self.ccAlertController dismissViewControllerAnimated:YES completion:^{
-            
-        }];
+        [self.ccAlertController dismissViewControllerAnimated:YES completion:nil];
     }
 }
 
+#pragma mark - 弹出框
+-(void)showAlertView:(UIViewController *)vc message:(NSString *)message sure:(void(^)(UIAlertAction * act))sure cancel:(void(^)(UIAlertAction * act))cancel{
+    [self showAlertView:vc title:@"提示" message:message sureTitle:@"确定" cancelTitle:@"取消" sure:sure cancel:cancel];
+}
+
+-(void)showAlertView:(UIViewController *)vc title:(NSString *)title message:(NSString *)message sureTitle:(NSString *)sureTitle cancelTitle:(NSString *)cancelTitle sure:(void(^)(UIAlertAction * act))sure cancel:(void(^)(UIAlertAction * act))cancel{
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title
+                                                                             message:message
+                                                                      preferredStyle:UIAlertControllerStyleAlert];
+    if (cancelTitle) {
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:cancelTitle style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            if (cancel) {
+                cancel(action);
+            }
+        }];
+        [alertController addAction:cancelAction];
+    }
+    
+    if (sureTitle) {
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:sureTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            if (sure) {
+                sure(action);
+            }
+        }];
+        [alertController addAction:okAction];
+    }
+    [vc presentViewController:alertController animated:YES completion:nil];
+}
+
+#pragma mark - Private methods
 -(void)findLabel:(UIView*)view succ:(void(^)(UIView *label))succ
 {
     for (UIView* subView in view.subviews)
@@ -105,5 +132,4 @@
         [self findLabel:subView succ:succ];
     }
 }
-
 @end

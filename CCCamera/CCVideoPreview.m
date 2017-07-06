@@ -27,6 +27,11 @@
     [(AVCaptureVideoPreviewLayer*)self.layer setSession:session];
 }
 
+- (CGPoint)captureDevicePointForPoint:(CGPoint)point {
+    AVCaptureVideoPreviewLayer *layer = (AVCaptureVideoPreviewLayer *)self.layer;
+    return [layer captureDevicePointOfInterestForPoint:point];
+}
+
 // 使该view的layer方法返回AVCaptureVideoPreviewLayer对象
 + (Class)layerClass {
     return [AVCaptureVideoPreviewLayer class];
