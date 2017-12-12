@@ -15,16 +15,16 @@
 
 /// 转换摄像头
 -(void)swicthCameraAction:(CCCameraView *)cameraView succ:(void(^)(void))succ fail:(void(^)(NSError *error))fail;
-/// 自动聚焦曝光
--(void)autoFocusAndExposureAction:(CCCameraView *)cameraView succ:(void(^)(void))succ fail:(void(^)(NSError *error))fail;
-/// 补光按钮
--(void)torchLightAction:(CCCameraView *)cameraView succ:(void(^)(void))succ fail:(void(^)(NSError *error))fail;
-/// 闪光灯按钮
+/// 闪光灯
 -(void)flashLightAction:(CCCameraView *)cameraView succ:(void(^)(void))succ fail:(void(^)(NSError *error))fail;
+/// 补光
+-(void)torchLightAction:(CCCameraView *)cameraView succ:(void(^)(void))succ fail:(void(^)(NSError *error))fail;
 /// 聚焦
 -(void)focusAction:(CCCameraView *)cameraView point:(CGPoint)point succ:(void(^)(void))succ fail:(void(^)(NSError *error))fail;
 /// 曝光
 -(void)exposAction:(CCCameraView *)cameraView point:(CGPoint)point succ:(void(^)(void))succ fail:(void(^)(NSError *error))fail;
+/// 自动聚焦曝光
+-(void)autoFocusAndExposureAction:(CCCameraView *)cameraView succ:(void(^)(void))succ fail:(void(^)(NSError *error))fail;
 
 /// 取消
 -(void)cancelAction:(CCCameraView *)cameraView;

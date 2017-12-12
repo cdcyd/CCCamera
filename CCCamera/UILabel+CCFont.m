@@ -24,8 +24,7 @@
         BOOL isAdd = class_addMethod(self, systemSel, method_getImplementation(swizzMethod), method_getTypeEncoding(swizzMethod));
         if (isAdd) {
             class_replaceMethod(self, swizzSel, method_getImplementation(systemMethod), method_getTypeEncoding(systemMethod));
-        } 
-        else{
+        } else {
             method_exchangeImplementations(systemMethod, swizzMethod);
         }
     });

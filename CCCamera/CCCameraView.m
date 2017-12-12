@@ -197,8 +197,7 @@
         if ([_delegate respondsToSelector:@selector(takePhotoAction:)]) {
             [_delegate takePhotoAction:self];
         }
-    }
-    else{
+    } else {
         if (btn.selected == YES) {
             // 结束
             btn.selected = NO;
@@ -206,8 +205,7 @@
             if ([_delegate respondsToSelector:@selector(stopRecordVideoAction:)]) {
                 [_delegate stopRecordVideoAction:self];
             }
-        }
-        else{
+        } else {
             // 开始
             btn.selected = YES;
             [_photoBtn setTitle:@"结束" forState:UIControlStateNormal];
@@ -231,8 +229,7 @@
     self.type = self.type == 1?2:1;
     if (self.type == 1) {
         [_photoBtn setTitle:@"拍照" forState:UIControlStateNormal];
-    }
-    else{
+    } else {
         [_photoBtn setTitle:@"开始" forState:UIControlStateNormal];
     }
     if ([_delegate respondsToSelector:@selector(didChangeTypeAction:type:)]) {
@@ -277,7 +274,7 @@
 -(void)focusAndExposureClick:(UIButton *)btn{
     if ([_delegate respondsToSelector:@selector(autoFocusAndExposureAction:succ:fail:)]) {
         [_delegate autoFocusAndExposureAction:self succ:^{
-            [self showAutoDismissHUD:[self viewController] message:@"自动聚焦曝光设置成功"];
+            [self showAutoDismissHUD:@"自动聚焦曝光设置成功"];
         } fail:^(NSError *error) {
             [self showError:error];
         }];
@@ -291,7 +288,7 @@
     view.hidden = NO;
     [UIView animateWithDuration:0.15f delay:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{
         view.layer.transform = CATransform3DMakeScale(0.5, 0.5, 1.0);
-    }completion:^(BOOL complete) {
+    } completion:^(BOOL complete) {
         double delayInSeconds = 0.5f;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
@@ -311,7 +308,7 @@
     [UIView animateWithDuration:0.15f delay:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.focusView.layer.transform = CATransform3DMakeScale(0.5, 0.5, 1.0);
         self.exposureView.layer.transform = CATransform3DMakeScale(0.7, 0.7, 1.0);
-    }completion:^(BOOL complete) {
+    } completion:^(BOOL complete) {
         double delayInSeconds = 0.5f;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
@@ -321,13 +318,6 @@
             self.exposureView.transform = CGAffineTransformIdentity;
         });
     }];
-}
-
-- (void)showError:(NSError *)error
-{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self showAlertView:[self viewController] title:error.localizedDescription message:error.localizedFailureReason sureTitle:@"确定" cancelTitle:nil sure:nil cancel:nil];
-    });
 }
 
 @end

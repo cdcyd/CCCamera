@@ -10,23 +10,23 @@
 
 @interface UIView (CCHUD)
 
-@property(nonatomic, strong ,readonly)UIAlertController *ccAlertController;
+@property(nonatomic, strong ,readonly)UIAlertController *alertController;
 
 // 加载框
--(void)showHUD:(UIViewController *)vc message:(NSString *)message;      // 没有菊花
+-(void)showHUD:(NSString *)message;      // 没有菊花
 
--(void)showLoadHUD:(UIViewController *)vc message:(NSString *)message;  // 有菊花
+-(void)showLoadHUD:(NSString *)message;  // 有菊花
 
 -(void)hideHUD;
 
 // 提示框
--(void)showAutoDismissHUD:(UIViewController *)vc message:(NSString *)message;
+-(void)showAutoDismissHUD:(NSString *)message;
 
--(void)showAutoDismissHUD:(UIViewController *)vc message:(NSString *)message delay:(NSTimeInterval)delay;
+-(void)showAutoDismissHUD:(NSString *)message delay:(NSTimeInterval)delay;
 
 // 弹出框
--(void)showAlertView:(UIViewController *)vc message:(NSString *)message sure:(void(^)(UIAlertAction * act))sure cancel:(void(^)(UIAlertAction * act))cancel;
+-(void)showError:(NSError *)error;
 
--(void)showAlertView:(UIViewController *)vc title:(NSString *)title message:(NSString *)message sureTitle:(NSString *)sureTitle cancelTitle:(NSString *)cancelTitle sure:(void(^)(UIAlertAction * act))sure cancel:(void(^)(UIAlertAction * act))cancel;
+-(void)showAlertView:(NSString *)message ok:(void(^)(UIAlertAction * action))ok cancel:(void(^)(UIAlertAction * action))cancel;
 
 @end
