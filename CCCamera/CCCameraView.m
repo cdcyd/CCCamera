@@ -112,8 +112,8 @@
     
     // 照片类型
     UIButton *typeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [typeButton setTitle:@"[照片]" forState:UIControlStateNormal];
-    [typeButton setTitle:@"[视频]" forState:UIControlStateSelected];
+    [typeButton setTitle:@"照片" forState:UIControlStateNormal];
+    [typeButton setTitle:@"视频" forState:UIControlStateSelected];
     [typeButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [typeButton addTarget:self action:@selector(changeType:) forControlEvents:UIControlEventTouchUpInside];
     [typeButton sizeToFit];
