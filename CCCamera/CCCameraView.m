@@ -250,8 +250,8 @@
 -(void)torchClick:(UIButton *)btn{
     if ([_delegate respondsToSelector:@selector(torchLightAction:succ:fail:)]) {
         [_delegate torchLightAction:self succ:^{
-            _flashBtn.selected = NO;
-            _torchBtn.selected = !_torchBtn.selected;
+            self->_flashBtn.selected = NO;
+            self->_torchBtn.selected = !self->_torchBtn.selected;
         } fail:^(NSError *error) {
             [self showError:error];
         }];
@@ -262,8 +262,8 @@
 -(void)flashClick:(UIButton *)btn{
     if ([_delegate respondsToSelector:@selector(flashLightAction:succ:fail:)]) {
         [_delegate flashLightAction:self succ:^{
-            _flashBtn.selected = !_flashBtn.selected;
-            _torchBtn.selected = NO;
+            self->_flashBtn.selected = !self->_flashBtn.selected;
+            self->_torchBtn.selected = NO;
         } fail:^(NSError *error) {
             [self showError:error];
         }];

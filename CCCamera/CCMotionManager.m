@@ -26,8 +26,10 @@
         if (!_motionManager.deviceMotionAvailable) {
             _motionManager = nil;
             return self;
-        } 
+        }
+        @weakify(self)
         [_motionManager startDeviceMotionUpdatesToQueue:[NSOperationQueue currentQueue] withHandler: ^(CMDeviceMotion *motion, NSError *error){
+            @strongify(self)
             [self performSelectorOnMainThread:@selector(handleDeviceMotion:) withObject:motion waitUntilDone:YES];
         }];
     }
@@ -37,30 +39,27 @@
 - (void)handleDeviceMotion:(CMDeviceMotion *)deviceMotion{
     double x = deviceMotion.gravity.x;
     double y = deviceMotion.gravity.y;
-    if (fabs(y) >= fabs(x))
-    {
-        if (y >= 0){
+    if (fabs(y) >= fabs(x)) {
+        if (y >= 0) {
             _deviceOrientation = UIDeviceOrientationPortraitUpsideDown;
-            _videoOrientation = AVCaptureVideoOrientationPortraitUpsideDown;
-        }
-        else{
+            _videoOrientation  = AVCaptureVideoOrientationPortraitUpsideDown;
+        } else {
             _deviceOrientation = UIDeviceOrientationPortrait;
-            _videoOrientation = AVCaptureVideoOrientationPortrait;
+            _videoOrientation  = AVCaptureVideoOrientationPortrait;
         }
-    }
-    else{
-        if (x >= 0){
+    } else {
+        if (x >= 0) {
             _deviceOrientation = UIDeviceOrientationLandscapeRight;
-            _videoOrientation = AVCaptureVideoOrientationLandscapeRight;
-        }
-        else{
+            _videoOrientation  = AVCaptureVideoOrientationLandscapeRight;
+        } else {
             _deviceOrientation = UIDeviceOrientationLandscapeLeft;
-            _videoOrientation = AVCaptureVideoOrientationLandscapeLeft;
+            _videoOrientation  = AVCaptureVideoOrientationLandscapeLeft;
         }
     }
 }
 
 -(void)dealloc{
+    NSLog(@"陀螺仪对象销毁了");
     [_motionManager stopDeviceMotionUpdates];
 }
 

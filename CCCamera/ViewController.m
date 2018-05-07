@@ -25,7 +25,7 @@
     self.title = @"CCCamera";
     self.dataSource = @[@"相机.CCCameraViewController",
                         @"gl渲染.CCglCameraViewController"];
-  
+
     [self.view addSubview:self.tableView];
     [[UITableViewHeaderFooterView appearance] setTintColor:UIColorWithHexA(0xebf5ff, 1)];
 }
