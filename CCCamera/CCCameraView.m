@@ -194,12 +194,9 @@
 // 自动聚焦和曝光
 -(void)focusAndExposureClick:(UIButton *)button{
     if ([_delegate respondsToSelector:@selector(autoFocusAndExposureAction:handle:)]) {
+        [self runResetAnimation];
         [_delegate autoFocusAndExposureAction:self handle:^(NSError *error) {
-            if (error){
-                [self showError:error];
-            } else {
-                [self showAutoDismissHUD:@"设置成功"];
-            }
+            if (error) [self showError:error];
         }];
     }
 }

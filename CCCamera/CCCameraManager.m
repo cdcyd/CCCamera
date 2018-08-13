@@ -83,8 +83,8 @@ static const NSString *CameraAdjustingExposureContext;
 
 #pragma mark - -自动聚焦、曝光
 - (id)resetFocusAndExposure:(AVCaptureDevice *)device {
-    AVCaptureExposureMode exposureMode = AVCaptureExposureModeContinuousAutoExposure;
     AVCaptureFocusMode focusMode = AVCaptureFocusModeContinuousAutoFocus;
+    AVCaptureExposureMode exposureMode = AVCaptureExposureModeContinuousAutoExposure;
     BOOL canResetFocus = [device isFocusPointOfInterestSupported] &&
                          [device isFocusModeSupported:focusMode];
     BOOL canResetExposure = [device isExposurePointOfInterestSupported] &&
