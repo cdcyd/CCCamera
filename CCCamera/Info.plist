@@ -8,11 +8,6 @@
 	<string>CCCamera将访问你的麦克风</string>
 	<key>NSCameraUsageDescription</key>
 	<string>CCCamera将访问你的相机</string>
-	<key>UIAppFonts</key>
-	<array>
-		<string>汉仪细行楷简.ttf</string>
-		<string>华文行楷.ttf</string>
-	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>

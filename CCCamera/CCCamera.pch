@@ -12,6 +12,7 @@
 @import UIKit;
 @import Foundation;
 
+#import "UIView+CCHUD.h"
 #import "UIView+CCAdditions.h"
 
 #ifdef DEBUG
@@ -48,26 +49,18 @@ _Pragma("chang diagnostic pop")
 _Pragma("chang diagnostic push") \
 _Pragma("chang diagnostic ignored \"-Wshadow\"") \
 try{} @finally{} __typeof__(x) x = __block_##x##__; \
-_Pragma("chang diagnostic pop)
+_Pragma("chang diagnostic pop")
 #endif
 #endif
 
 // 颜色
-#define UIColorWithHexA(rgbValue, alphaValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 \
-                                                              green:((float)((rgbValue & 0x00FF00) >> 8))/255.0 \
-                                                               blue:((float)(rgbValue & 0x0000FF)) / 255.0 \
-                                                              alpha:alphaValue]
+#define UIColor(rgbValue, alphaValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 \
+                                                      green:((float)((rgbValue & 0x00FF00) >> 8))/255.0 \
+                                                       blue:((float)(rgbValue & 0x0000FF)) / 255.0 \
+                                                      alpha:alphaValue]
 
-// 获取屏幕 宽度、高度
+// 屏幕 宽度、高度
 #define CD_SCREEN_WIDTH ([UIScreen mainScreen].bounds.size.width)
 #define CD_SCREEN_HEIGHT ([UIScreen mainScreen].bounds.size.height)
-
-// 获取去掉状态栏的屏幕的宽度、高度
-#define CD_SCREEN_WIDTH_NO_STATUSBAR ([UIScreen mainScreen].applicationFrame.size.width)
-#define CD_SCREEN_HEIGHT_NO_STATUSBAR ([UIScreen mainScreen].applicationFrame.size.height)
-
-// 字体 （默认字体：华文行楷）
-#define CD_HYXXK_SYSTEMFONT    [UIFont fontWithName:@"HYi2gj" size:[UIFont systemFontSize]]; //汉仪细行楷
-#define CD_HYXXK_FONT(cd_font) [UIFont fontWithName:@"HYi2gj" size:cd_font];                 //汉仪细行楷
 
 #endif /* CCCamera_pch */

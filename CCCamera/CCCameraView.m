@@ -171,27 +171,40 @@
 
 // 聚焦
 -(void)tapAction:(UIGestureRecognizer *)tap{
-    if ([_delegate respondsToSelector:@selector(focusAction:point:succ:fail:)]) {
+    if ([_delegate respondsToSelector:@selector(focusAction:point:handle:)]) {
         CGPoint point = [tap locationInView:self.previewView];
         [self runFocusAnimation:self.focusView point:point];
-        [_delegate focusAction:self point:[self.previewView captureDevicePointForPoint:point] succ:nil fail:^(NSError *error) {
-            [self showError:error];
+        [_delegate focusAction:self point:[self.previewView captureDevicePointForPoint:point] handle:^(NSError *error) {
+            if (error) [self showError:error];
         }];
     }
 }
 
 // 曝光
 -(void)doubleTapAction:(UIGestureRecognizer *)tap{
-    if ([_delegate respondsToSelector:@selector(exposAction:point:succ:fail:)]) {
+    if ([_delegate respondsToSelector:@selector(exposAction:point:handle:)]) {
         CGPoint point = [tap locationInView:self.previewView];
         [self runFocusAnimation:self.exposureView point:point];
-        [_delegate exposAction:self point:[self.previewView captureDevicePointForPoint:point] succ:nil fail:^(NSError *error) {
-            [self showError:error];
+        [_delegate exposAction:self point:[self.previewView captureDevicePointForPoint:point] handle:^(NSError *error) {
+            if (error) [self showError:error];
         }];
     }
 }
 
-// 拍照
+// 自动聚焦和曝光
+-(void)focusAndExposureClick:(UIButton *)button{
+    if ([_delegate respondsToSelector:@selector(autoFocusAndExposureAction:handle:)]) {
+        [_delegate autoFocusAndExposureAction:self handle:^(NSError *error) {
+            if (error){
+                [self showError:error];
+            } else {
+                [self showAutoDismissHUD:@"设置成功"];
+            }
+        }];
+    }
+}
+
+// 拍照、视频
 -(void)takePicture:(UIButton *)btn{
     if (self.type == 1) {
         if ([_delegate respondsToSelector:@selector(takePhotoAction:)]) {
@@ -237,46 +250,39 @@
     }
 }
 
-// 转换前后摄像头
+// 转换摄像头
 -(void)switchCameraClick:(UIButton *)btn{
-    if ([_delegate respondsToSelector:@selector(swicthCameraAction:succ:fail:)]) {
-        [_delegate swicthCameraAction:self succ:nil fail:^(NSError *error) {
-            [self showError:error];
+    if ([_delegate respondsToSelector:@selector(swicthCameraAction:handle:)]) {
+        [_delegate swicthCameraAction:self handle:^(NSError *error) {
+            if (error) [self showError:error];
         }];
     }
 }
 
 // 手电筒
 -(void)torchClick:(UIButton *)btn{
-    if ([_delegate respondsToSelector:@selector(torchLightAction:succ:fail:)]) {
-        [_delegate torchLightAction:self succ:^{
-            self->_flashBtn.selected = NO;
-            self->_torchBtn.selected = !self->_torchBtn.selected;
-        } fail:^(NSError *error) {
-            [self showError:error];
+    if ([_delegate respondsToSelector:@selector(torchLightAction:handle:)]) {
+        [_delegate torchLightAction:self handle:^(NSError *error) {
+            if (error) {
+                [self showError:error];
+            } else {
+                self->_flashBtn.selected = NO;
+                self->_torchBtn.selected = !self->_torchBtn.selected;
+            }
         }];
     }
 }
 
 // 闪光灯
 -(void)flashClick:(UIButton *)btn{
-    if ([_delegate respondsToSelector:@selector(flashLightAction:succ:fail:)]) {
-        [_delegate flashLightAction:self succ:^{
-            self->_flashBtn.selected = !self->_flashBtn.selected;
-            self->_torchBtn.selected = NO;
-        } fail:^(NSError *error) {
-            [self showError:error];
-        }];
-    }
-}
-
-// 自动聚焦和曝光
--(void)focusAndExposureClick:(UIButton *)btn{
-    if ([_delegate respondsToSelector:@selector(autoFocusAndExposureAction:succ:fail:)]) {
-        [_delegate autoFocusAndExposureAction:self succ:^{
-            [self showAutoDismissHUD:@"自动聚焦曝光设置成功"];
-        } fail:^(NSError *error) {
-            [self showError:error];
+    if ([_delegate respondsToSelector:@selector(flashLightAction:handle:)]) {
+        [_delegate flashLightAction:self handle:^(NSError *error) {
+            if (error) {
+                [self showError:error];
+            } else {
+                self->_flashBtn.selected = !self->_flashBtn.selected;
+                self->_torchBtn.selected = NO;
+            }
         }];
     }
 }

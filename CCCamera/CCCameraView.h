@@ -13,18 +13,18 @@
 @protocol CCCameraViewDelegate <NSObject>
 @optional;
 
-/// 转换摄像头
--(void)swicthCameraAction:(CCCameraView *)cameraView succ:(void(^)(void))succ fail:(void(^)(NSError *error))fail;
 /// 闪光灯
--(void)flashLightAction:(CCCameraView *)cameraView succ:(void(^)(void))succ fail:(void(^)(NSError *error))fail;
+-(void)flashLightAction:(CCCameraView *)cameraView handle:(void(^)(NSError *error))handle;
 /// 补光
--(void)torchLightAction:(CCCameraView *)cameraView succ:(void(^)(void))succ fail:(void(^)(NSError *error))fail;
-/// 聚焦
--(void)focusAction:(CCCameraView *)cameraView point:(CGPoint)point succ:(void(^)(void))succ fail:(void(^)(NSError *error))fail;
-/// 曝光
--(void)exposAction:(CCCameraView *)cameraView point:(CGPoint)point succ:(void(^)(void))succ fail:(void(^)(NSError *error))fail;
+-(void)torchLightAction:(CCCameraView *)cameraView handle:(void(^)(NSError *error))handle;
+/// 转换摄像头
+-(void)swicthCameraAction:(CCCameraView *)cameraView handle:(void(^)(NSError *error))handle;
 /// 自动聚焦曝光
--(void)autoFocusAndExposureAction:(CCCameraView *)cameraView succ:(void(^)(void))succ fail:(void(^)(NSError *error))fail;
+-(void)autoFocusAndExposureAction:(CCCameraView *)cameraView handle:(void(^)(NSError *error))handle;
+/// 聚焦
+-(void)focusAction:(CCCameraView *)cameraView point:(CGPoint)point handle:(void(^)(NSError *error))handle;
+/// 曝光
+-(void)exposAction:(CCCameraView *)cameraView point:(CGPoint)point handle:(void(^)(NSError *error))handle;
 
 /// 取消
 -(void)cancelAction:(CCCameraView *)cameraView;
@@ -34,7 +34,7 @@
 -(void)stopRecordVideoAction:(CCCameraView *)cameraView;
 /// 开始录制视频
 -(void)startRecordVideoAction:(CCCameraView *)cameraView;
-/// 改变拍摄类型
+/// 改变拍摄类型 1：拍照 2：视频
 -(void)didChangeTypeAction:(CCCameraView *)cameraView type:(NSInteger)type;
 
 @end
