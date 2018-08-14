@@ -25,6 +25,8 @@
 -(void)focusAction:(CCCameraView *)cameraView point:(CGPoint)point handle:(void(^)(NSError *error))handle;
 /// 曝光
 -(void)exposAction:(CCCameraView *)cameraView point:(CGPoint)point handle:(void(^)(NSError *error))handle;
+/// 缩放
+-(void)zoomAction:(CCCameraView *)cameraView factor:(CGFloat)factor;
 
 /// 取消
 -(void)cancelAction:(CCCameraView *)cameraView;

@@ -25,6 +25,19 @@
     }
 }
 
+#pragma mark - -缩放
+- (id)zoom:(AVCaptureDevice *)device factor:(CGFloat)factor {
+    if (device.activeFormat.videoMaxZoomFactor > factor && factor >= 1.0) {
+        NSError *error;
+        if ([device lockForConfiguration:&error]) {
+            [device rampToVideoZoomFactor:factor withRate:4.0];
+            [device unlockForConfiguration];
+        }
+        return error;
+    }
+    return [self error:@"不支持的缩放倍数" code:2000];
+}
+
 #pragma mark - -聚焦
 - (id)focus:(AVCaptureDevice *)device point:(CGPoint)point{
     BOOL supported = [device isFocusPointOfInterestSupported] &&
@@ -38,7 +51,7 @@
         }
         return error;
     }
-    return [self error:@"设备不支持对焦" code:403];
+    return [self error:@"设备不支持对焦" code:2001];
 }
 
 #pragma mark - -曝光
@@ -58,7 +71,7 @@ static const NSString *CameraAdjustingExposureContext;
         }
         return error;
     }
-    return [self error:@"设备不支持曝光" code:403];
+    return [self error:@"设备不支持曝光" code:2002];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
@@ -112,7 +125,7 @@ static const NSString *CameraAdjustingExposureContext;
 
 - (id)changeFlash:(AVCaptureDevice *)device mode:(AVCaptureFlashMode)mode{
     if (![device hasFlash]) {
-        return [self error:@"不支持闪光灯" code:401];
+        return [self error:@"不支持闪光灯" code:2003];
     }
     if ([self torchMode:device] == AVCaptureTorchModeOn) {
         [self setTorch:device model:AVCaptureTorchModeOff];
@@ -129,7 +142,7 @@ static const NSString *CameraAdjustingExposureContext;
         }
         return error;
     }
-    return [self error:@"不支持闪光灯" code:401];
+    return [self error:@"不支持闪光灯" code:2003];
 }
 
 #pragma mark - -手电筒
@@ -139,7 +152,7 @@ static const NSString *CameraAdjustingExposureContext;
 
 - (id)changeTorch:(AVCaptureDevice *)device model:(AVCaptureTorchMode)mode{
     if (![device hasTorch]) {
-        return [self error:@"不支持手电筒" code:403];
+        return [self error:@"不支持手电筒" code:2004];
     }
     if ([self flashMode:device] == AVCaptureFlashModeOn) {
         [self setFlash:device mode:AVCaptureFlashModeOff];
@@ -156,7 +169,7 @@ static const NSString *CameraAdjustingExposureContext;
         }
         return error;
     }
-    return [self error:@"不支持手电筒" code:403];
+    return [self error:@"不支持手电筒" code:2004];
 }
 
 #pragma mark -

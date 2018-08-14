@@ -19,6 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (id)resetFocusAndExposure:(AVCaptureDevice *)device;
 
+- (id)zoom:(AVCaptureDevice *)device factor:(CGFloat)factor;
+
 - (id)focus:(AVCaptureDevice *)device point:(CGPoint)point;
 
 - (id)expose:(AVCaptureDevice *)device point:(CGPoint)point;

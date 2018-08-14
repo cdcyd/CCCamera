@@ -18,6 +18,7 @@
 @property(nonatomic, strong) UIView *focusView;    // 聚焦动画view
 @property(nonatomic, strong) UIView *exposureView; // 曝光动画view
 
+@property(nonatomic, strong) UISlider *slider;
 @property(nonatomic, strong) UIButton *torchBtn;
 @property(nonatomic, strong) UIButton *flashBtn;
 @property(nonatomic, strong) UIButton *photoBtn;
@@ -75,22 +76,45 @@
     return _exposureView;
 }
 
+-(UISlider *)slider{
+    if (_slider == nil) {
+        _slider = [[UISlider alloc] init];
+        _slider.minimumValue = 0;
+        _slider.maximumValue = 1;
+        _slider.maximumTrackTintColor = [UIColor whiteColor];
+        _slider.minimumTrackTintColor = [UIColor whiteColor];
+        _slider.alpha = 0.0;
+    }
+    return _slider;
+}
+
 -(void)setupUI{
     self.previewView = [[CCVideoPreview alloc]initWithFrame:CGRectMake(0, 64, self.width, self.height-64-100)];
-    
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapAction:)];
-    UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(doubleTapAction:)];
-    doubleTap.numberOfTapsRequired = 2;
-    [self.previewView addGestureRecognizer:tap];
-    [self.previewView addGestureRecognizer:doubleTap];
-    [tap requireGestureRecognizerToFail:doubleTap];
-    
     [self addSubview:self.previewView];
     [self addSubview:self.topView];
     [self addSubview:self.bottomView];
     [self.previewView addSubview:self.focusView];
     [self.previewView addSubview:self.exposureView];
-    
+    [self.previewView addSubview:self.slider];
+
+    // ----------------------- 手势
+    // 点击-->聚焦 双击-->曝光
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction:)];
+    UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapAction:)];
+    doubleTap.numberOfTapsRequired = 2;
+    [self.previewView addGestureRecognizer:tap];
+    [self.previewView addGestureRecognizer:doubleTap];
+    [tap requireGestureRecognizerToFail:doubleTap];
+
+    // 捏合-->缩放
+    UIPinchGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action: @selector(pinchAction:)];
+    [self.previewView addGestureRecognizer:pinch];
+
+    // ----------------------- UI
+    // 缩放
+    self.slider.transform = CGAffineTransformMakeRotation(M_PI_2);
+    self.slider.frame = CGRectMake(CD_SCREEN_WIDTH-50, 50, 15, 200);
+
     // 拍照
     UIButton *photoButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [photoButton setTitle:@"拍照" forState:UIControlStateNormal];
@@ -150,7 +174,7 @@
     flashButton.center = CGPointMake(flashButton.width/2 + lightButton.right+10, _topView.height/2);
     [self.topView addSubview:flashButton];
     _flashBtn = flashButton;
-    
+
     // 重置对焦、曝光
     UIButton *focusAndExposureButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [focusAndExposureButton setTitle:@"自动聚焦/曝光" forState:UIControlStateNormal];
@@ -169,8 +193,29 @@
     _flashBtn.selected = on;
 }
 
+-(void)pinchAction:(UIPinchGestureRecognizer *)pinch {
+    if ([_delegate respondsToSelector:@selector(zoomAction:factor:)]) {
+        if (pinch.state == UIGestureRecognizerStateBegan) {
+            [UIView animateWithDuration:0.1 animations:^{
+                self->_slider.alpha = 1;
+            }];
+        } else if (pinch.state == UIGestureRecognizerStateChanged) {
+            if (pinch.velocity > 0) {
+                _slider.value += pinch.velocity/100;
+            } else {
+                _slider.value += pinch.velocity/20;
+            }
+            [_delegate zoomAction:self factor: powf(5, _slider.value)];
+        } else {
+            [UIView animateWithDuration:0.1 animations:^{
+                self->_slider.alpha = 0.0;
+            }];
+        }
+    }
+}
+
 // 聚焦
--(void)tapAction:(UIGestureRecognizer *)tap{
+-(void)tapAction:(UIGestureRecognizer *)tap {
     if ([_delegate respondsToSelector:@selector(focusAction:point:handle:)]) {
         CGPoint point = [tap locationInView:self.previewView];
         [self runFocusAnimation:self.focusView point:point];
@@ -181,7 +226,7 @@
 }
 
 // 曝光
--(void)doubleTapAction:(UIGestureRecognizer *)tap{
+-(void)doubleTapAction:(UIGestureRecognizer *)tap {
     if ([_delegate respondsToSelector:@selector(exposAction:point:handle:)]) {
         CGPoint point = [tap locationInView:self.previewView];
         [self runFocusAnimation:self.exposureView point:point];
@@ -192,7 +237,7 @@
 }
 
 // 自动聚焦和曝光
--(void)focusAndExposureClick:(UIButton *)button{
+-(void)focusAndExposureClick:(UIButton *)button {
     if ([_delegate respondsToSelector:@selector(autoFocusAndExposureAction:handle:)]) {
         [self runResetAnimation];
         [_delegate autoFocusAndExposureAction:self handle:^(NSError *error) {
@@ -202,7 +247,7 @@
 }
 
 // 拍照、视频
--(void)takePicture:(UIButton *)btn{
+-(void)takePicture:(UIButton *)btn {
     if (self.type == 1) {
         if ([_delegate respondsToSelector:@selector(takePhotoAction:)]) {
             [_delegate takePhotoAction:self];
@@ -227,14 +272,14 @@
 }
 
 // 取消
--(void)cancel:(UIButton *)btn{
+-(void)cancel:(UIButton *)btn {
     if ([_delegate respondsToSelector:@selector(cancelAction:)]) {
         [_delegate cancelAction:self];
     }
 }
 
 // 转换拍摄类型
--(void)changeType:(UIButton *)btn{
+-(void)changeType:(UIButton *)btn {
     btn.selected = !btn.selected;
     self.type = self.type == 1?2:1;
     if (self.type == 1) {
@@ -248,7 +293,7 @@
 }
 
 // 转换摄像头
--(void)switchCameraClick:(UIButton *)btn{
+-(void)switchCameraClick:(UIButton *)btn {
     if ([_delegate respondsToSelector:@selector(swicthCameraAction:handle:)]) {
         [_delegate swicthCameraAction:self handle:^(NSError *error) {
             if (error) [self showError:error];
@@ -257,7 +302,7 @@
 }
 
 // 手电筒
--(void)torchClick:(UIButton *)btn{
+-(void)torchClick:(UIButton *)btn {
     if ([_delegate respondsToSelector:@selector(torchLightAction:handle:)]) {
         [_delegate torchLightAction:self handle:^(NSError *error) {
             if (error) {
@@ -271,7 +316,7 @@
 }
 
 // 闪光灯
--(void)flashClick:(UIButton *)btn{
+-(void)flashClick:(UIButton *)btn {
     if ([_delegate respondsToSelector:@selector(flashLightAction:handle:)]) {
         [_delegate flashLightAction:self handle:^(NSError *error) {
             if (error) {
@@ -286,7 +331,7 @@
 
 #pragma mark - Private methods
 // 聚焦、曝光动画
--(void)runFocusAnimation:(UIView *)view point:(CGPoint)point{
+-(void)runFocusAnimation:(UIView *)view point:(CGPoint)point {
     view.center = point;
     view.hidden = NO;
     [UIView animateWithDuration:0.15f delay:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{

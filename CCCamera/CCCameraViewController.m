@@ -195,10 +195,17 @@
 }
 
 #pragma mark - -操作相机
+// 缩放
+-(void)zoomAction:(CCCameraView *)cameraView factor:(CGFloat)factor {
+    NSError *error = [_cameraManager zoom:[self activeCamera] factor:factor];
+    if (error) NSLog(@"%@", error);
+}
+
 // 聚焦
 -(void)focusAction:(CCCameraView *)cameraView point:(CGPoint)point handle:(void (^)(NSError *))handle {
     NSError *error = [_cameraManager focus:[self activeCamera] point:point];
     handle(error);
+    NSLog(@"%f", [self activeCamera].activeFormat.videoMaxZoomFactor);
 }
 
 // 曝光
