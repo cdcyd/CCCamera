@@ -9,8 +9,6 @@
 #import "ViewController.h"
 #import <objc/runtime.h>
 
-#import "CCCameraViewController.h"
-
 @interface ViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 @property(nonatomic, strong)UITableView *tableView;
@@ -24,8 +22,8 @@
     [super viewDidLoad];
     self.title = @"CCCamera";
     self.dataSource = @[@"相机.CCCameraViewController",
-                        @"滤镜.CCglCameraViewController"];
-
+                        @"滤镜.CCFilterViewController.swift",
+                        @"OpenGL ES.CCGLRenderCameraViewController"];
     [self.view addSubview:self.tableView];
     [[UITableViewHeaderFooterView appearance] setTintColor:UIColor(0xebf5ff, 1)];
 }
@@ -70,7 +68,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    const char *className = [[[_dataSource[indexPath.section] componentsSeparatedByString:@"."] lastObject] UTF8String];
+    NSArray<NSString *> *names = [_dataSource[indexPath.section] componentsSeparatedByString:@"."];
+    NSString *name = [names.lastObject isEqualToString:@"swift"] ? [NSString stringWithFormat:@"CCCamera.%@", names[1]] : names.lastObject;
+    const char *className = [name UTF8String];
     Class pushClass = objc_getClass(className);
     if (object_isClass(pushClass)) {
         id vc = [[pushClass alloc]init];

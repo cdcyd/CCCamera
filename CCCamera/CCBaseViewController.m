@@ -20,6 +20,10 @@
     self.view.backgroundColor = UIColor(0xebf5ff, 1);
 }
 
+- (void)dealloc {
+    NSLog(@"dealloc: %@", self);
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

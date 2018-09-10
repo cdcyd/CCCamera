@@ -1,25 +1,26 @@
 //
-//  CCglCameraViewController.m
+//  CCGLRenderCameraViewController.m
 //  CCCamera
 //
 //  Created by wsk on 16/8/29.
 //  Copyright © 2016年 cyd. All rights reserved.
 //
 
-#import "CCglCameraViewController.h"
+#import "CCGLRenderCameraViewController.h"
 #import <AVFoundation/AVFoundation.h>
 #import <GLKit/GLKit.h>
 
-@interface CCglCameraViewController ()<AVCaptureVideoDataOutputSampleBufferDelegate>
+@interface CCGLRenderCameraViewController ()<AVCaptureVideoDataOutputSampleBufferDelegate>
 {
     AVCaptureSession  *_captureSession;
 }
 @property(nonatomic, strong) GLKView   *glview;
+
 @property(nonatomic, strong) CIContext *cicontext;
 
 @end
 
-@implementation CCglCameraViewController
+@implementation CCGLRenderCameraViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -61,15 +62,22 @@
     }
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [_captureSession stopRunning];
+}
+
 -(void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection{
-    if (_glview.context != [EAGLContext currentContext]) {
-        [EAGLContext setCurrentContext:_glview.context];
+    if (self->_glview.context != [EAGLContext currentContext]) {
+        [EAGLContext setCurrentContext:self->_glview.context];
     }
     CVImageBufferRef imageRef = CMSampleBufferGetImageBuffer(sampleBuffer);
     CIImage *image = [CIImage imageWithCVImageBuffer:imageRef];
-    [_glview bindDrawable];
-    [_cicontext drawImage:image inRect:image.extent fromRect:image.extent];
-    [_glview display];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self->_glview bindDrawable];
+        [self->_cicontext drawImage:image inRect:image.extent fromRect:image.extent];
+        [self->_glview display];
+    });
 }
 
 - (void)didReceiveMemoryWarning {

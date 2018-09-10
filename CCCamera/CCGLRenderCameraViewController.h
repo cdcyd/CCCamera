@@ -1,5 +1,5 @@
 //
-//  CCglCameraViewController.h
+//  CCGLRenderCameraViewController.h
 //  CCCamera
 //
 //  Created by wsk on 16/8/29.
@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CCBaseViewController.h"
 
-@interface CCglCameraViewController : UIViewController
+@interface CCGLRenderCameraViewController : CCBaseViewController
 
 @end
