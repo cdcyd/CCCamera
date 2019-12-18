@@ -62,5 +62,5 @@ _Pragma("chang diagnostic pop")
 // 屏幕 宽度、高度
 #define CD_SCREEN_WIDTH ([UIScreen mainScreen].bounds.size.width)
 #define CD_SCREEN_HEIGHT ([UIScreen mainScreen].bounds.size.height)
-z
+
 #endif /* CCCamera_pch */
